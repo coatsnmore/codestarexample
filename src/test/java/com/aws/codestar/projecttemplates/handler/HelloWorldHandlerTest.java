@@ -5,6 +5,7 @@ import com.amazonaws.serverless.proxy.internal.testutils.MockLambdaContext;
 import com.aws.codestar.projecttemplates.GatewayResponse;
 
 import org.json.JSONObject;
+import org.junit.Ignore;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -59,18 +60,6 @@ public class HelloWorldHandlerTest {
         // Verify the response obtained matches the values we expect.
         JSONObject jsonObjectFromResponse = new JSONObject(response.getBody());
         assertEquals(EXPECTED_RESPONSE_VALUE, jsonObjectFromResponse.get("Output"));
-        assertEquals(EXPECTED_CONTENT_TYPE, response.getHeaders().get("Content-Type"));
-        assertEquals(EXPECTED_STATUS_CODE_SUCCESS, response.getStatusCode());
-    }
-
-    @Test
-    @DisplayName("failure")
-    void fail() {
-        GatewayResponse response = (GatewayResponse) new HelloWorldHandler().handleRequest(input, mockLambdaContext);
-
-        // Verify the response obtained matches the values we expect.
-        JSONObject jsonObjectFromResponse = new JSONObject(response.getBody());
-        assertEquals("asdf", jsonObjectFromResponse.get("Output"));
         assertEquals(EXPECTED_CONTENT_TYPE, response.getHeaders().get("Content-Type"));
         assertEquals(EXPECTED_STATUS_CODE_SUCCESS, response.getStatusCode());
     }

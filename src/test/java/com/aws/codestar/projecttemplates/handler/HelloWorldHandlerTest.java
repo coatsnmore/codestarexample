@@ -13,7 +13,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Tests for {@link HelloWorldHandler}. Modify the tests in order to support your use case as you build your project.
+ * Tests for {@link HelloWorldHandler}. Modify the tests in order to support
+ * your use case as you build your project.
  */
 @DisplayName("Tests for HelloWorldHandler")
 public class HelloWorldHandlerTest {
@@ -27,8 +28,8 @@ public class HelloWorldHandlerTest {
     private final Object input = new Object();
 
     /**
-     * Initializing variables before we run the tests.
-     * Use @BeforeAll for initializing static variables at the start of the test class execution.
+     * Initializing variables before we run the tests. Use @BeforeAll for
+     * initializing static variables at the start of the test class execution.
      * Use @BeforeEach for initializing variables before each test is run.
      */
     @BeforeAll
@@ -37,8 +38,8 @@ public class HelloWorldHandlerTest {
     }
 
     /**
-     * De-initializing variables after we run the tests.
-     * Use @AfterAll for de-initializing static variables at the end of the test class execution.
+     * De-initializing variables after we run the tests. Use @AfterAll for
+     * de-initializing static variables at the end of the test class execution.
      * Use @AfterEach for de-initializing variables at the end of each test.
      */
     @AfterAll
@@ -47,7 +48,8 @@ public class HelloWorldHandlerTest {
     }
 
     /**
-     * Basic test to verify the result obtained when calling {@link HelloWorldHandler} successfully.
+     * Basic test to verify the result obtained when calling
+     * {@link HelloWorldHandler} successfully.
      */
     @Test
     @DisplayName("Basic test for request handler")
@@ -57,6 +59,18 @@ public class HelloWorldHandlerTest {
         // Verify the response obtained matches the values we expect.
         JSONObject jsonObjectFromResponse = new JSONObject(response.getBody());
         assertEquals(EXPECTED_RESPONSE_VALUE, jsonObjectFromResponse.get("Output"));
+        assertEquals(EXPECTED_CONTENT_TYPE, response.getHeaders().get("Content-Type"));
+        assertEquals(EXPECTED_STATUS_CODE_SUCCESS, response.getStatusCode());
+    }
+
+    @Test
+    @DisplayName("failure")
+    void fail() {
+        GatewayResponse response = (GatewayResponse) new HelloWorldHandler().handleRequest(input, mockLambdaContext);
+
+        // Verify the response obtained matches the values we expect.
+        JSONObject jsonObjectFromResponse = new JSONObject(response.getBody());
+        assertEquals("asdf", jsonObjectFromResponse.get("Output"));
         assertEquals(EXPECTED_CONTENT_TYPE, response.getHeaders().get("Content-Type"));
         assertEquals(EXPECTED_STATUS_CODE_SUCCESS, response.getStatusCode());
     }
